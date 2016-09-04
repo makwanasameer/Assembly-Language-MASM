@@ -1,0 +1,52 @@
+roll no:09bce026
+practical no 2:addition of two 16-bit data
+Turbo Assembler	 Version 3.1	    07/20/11 14:51:46	    Page 1
+sam16.asm
+
+
+
+      1	0000			     data segment
+      2	0000  1111			     var1 dw 1111h
+      3	0002  2222			     var2 dw 2222h
+      4
+      5	0004			     data ends
+      6	0000			     code segment
+      7				     assume cs:code,ds:data
+      8	0000			     start:
+      9	0000  B8 0000s			     mov ax,data
+     10	0003  8E D8			     mov ds,ax
+     11	0005  A1 0000r			     mov ax,var1
+     12	0008  8B 1E 0002r		     mov bx,var2
+     13	000C  03 C3			     add ax,bx
+     14
+     15
+     16	000E  B4 4C			     mov ah,4ch
+     17	0010  CD 21			     int 21h
+     18
+     19	0012			     code ends
+     20					     end start
+Turbo Assembler	 Version 3.1	    07/20/11 14:51:46	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "07/20/11"
+??FILENAME			  Text	 "sam16	  "
+??TIME				  Text	 "14:51:46"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 SAM16
+@WORDSIZE			  Text	 2
+START				  Near	 CODE:0000
+VAR1				  Word	 DATA:0000
+VAR2				  Word	 DATA:0002
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0012 Para	  none
+DATA				  16  0004 Para	  none
+

@@ -1,0 +1,75 @@
+Turbo Assembler	 Version 3.1	    08/10/11 15:56:32	    Page 1
+sort.asm
+
+
+
+      1
+      2
+      3
+      4	0000			     data segment
+      5	0000  19 15 30		     ar	db 19h,15h,30h
+      6
+      7	0003			     data ends
+      8
+      9	0000			     code segment
+     10
+     11				     assume ds:data,cs:code
+     12
+     13	0000			     start:
+     14
+     15	0000  B8 0000s		     mov ax,data
+     16	0003  8E D8		     mov ds,ax
+     17	0005  BE 0000r		     lea si,ar
+     18	0008  BF 0000r		     lea di,ar
+     19	000B  BA 0002		     mov dx,02h
+     20	000E  8B 1C		     mov bx,[si]
+     21
+     22	0010  8B CA		     lp1:mov cx,dx
+     23	0012  8B F3			 mov si,bx
+     24	0014  8A 04			 mov al,[si]
+     25	0016  46		     lp2:inc si
+     26	0017  3A 04			 cmp al,[si]
+     27	0019  72 02			 jc labl
+     28	001B  86 04			 xchg al,[si]
+     29
+     30	001D  E2 F7			     labl:loop lp2
+     31	001F  88 05			     mov [di],al
+     32	0021  47			     inc di
+     33	0022  8B DF			     mov bx,di
+     34	0024  8B F3			     mov si,bx
+     35	0026  4A			     dec dx
+     36	0027  E2 E7			     loop lp1
+     37
+     38
+     39
+     40	0029  B4 4C		     mov ah,4ch
+     41	002B  CD 21		     int 21h
+     42	002D			     code ends
+     43				     end start
+Turbo Assembler	 Version 3.1	    08/10/11 15:56:32	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "08/10/11"
+??FILENAME			  Text	 "sort	  "
+??TIME				  Text	 "15:56:32"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 SORT
+@WORDSIZE			  Text	 2
+AR				  Byte	 DATA:0000
+LABL				  Near	 CODE:001D
+LP1				  Near	 CODE:0010
+LP2				  Near	 CODE:0016
+START				  Near	 CODE:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  002D Para	  none
+DATA				  16  0003 Para	  none
+

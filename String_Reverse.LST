@@ -1,0 +1,117 @@
+Turbo Assembler	 Version 3.1	    01/01/02 06:32:19	    Page 1
+sam_rev.asm
+
+
+
+      1				     read macro	num
+      2					     mov ah,0ah
+      3					     mov dx,offset num
+      4					     int 21h
+      5				     endm
+      6				     print macro num1
+      7					     mov ah,09h
+      8					     mov dx,offset num1
+      9					     int 21h
+     10				     endm
+     11
+     12
+     13	0000			     data segment
+     14	0000  14			     str1 db 20
+     15	0001  00				  db 0
+     16	0002  14*(24)				  db 20	DUP('$')
+     17
+     18	0016  14*(24)			     str2 db 20	dup('$')
+     19	002A  45 6E 74 65 72 20	74+	     s1	db "Enter the string:$"
+     20	      68 65 20 73 74 72	69+
+     21	      6E 67 3A 24
+     22	003C  0D 0A 24			     newline db	0dh,0ah,'$'
+     23
+     24	003F			     data ends
+     25	0000			     code segment
+     26				     assume cs:code,ds:data
+     27	0000			     start:
+     28	0000  B8 0000s			     mov ax,data
+     29	0003  8E D8			     mov ds,ax
+     30					     print s1
+1    31	0005  B4 09			     mov ah,09h
+1    32	0007  BA 002Ar			     mov dx,offset s1
+1    33	000A  CD 21			     int 21h
+     34					     read str1
+1    35	000C  B4 0A			     mov ah,0ah
+1    36	000E  BA 0000r			     mov dx,offset str1
+1    37	0011  CD 21			     int 21h
+     38					     print newline
+1    39	0013  B4 09			     mov ah,09h
+1    40	0015  BA 003Cr			     mov dx,offset newline
+1    41	0018  CD 21			     int 21h
+     42	001A  BE 0000r			     mov si,offset str1
+     43	001D  BF 0016r			     mov di,offset str2
+     44	0020  46			     inc si
+     45	0021  B9 0000			     mov cx,0000h
+     46	0024  8A 0C			     mov cl,[si]
+     47	0026  46			     inc si
+     48	0027  46			lp2: inc si
+     49	0028  E2 FD			     loop lp2
+     50	002A  8A 14			lp1: mov dl,[si]
+     51	002C  88 15			     mov [di],dl
+     52	002E  47			     inc di
+     53	002F  4E			     dec si
+     54	0030  E2 F8			     loop lp1
+     55					     print str2
+1    56	0032  B4 09			     mov ah,09h
+1    57	0034  BA 0016r			     mov dx,offset str2
+Turbo Assembler	 Version 3.1	    01/01/02 06:32:19	    Page 2
+sam_rev.asm
+
+
+
+1    58	0037  CD 21			     int 21h
+     59
+     60				     ;	      mov cx,0000h
+     61				     ;	      mov cl,bh
+     62				     ;	      mov di,offset str2
+     63				     ;	 lp3:	  mov dl,[di]
+     64				     ;	      mov ah,02h
+     65				     ;	      int 21h
+     66				     ;	      inc di
+     67				     ;	      loop lp3
+     68
+     69	0039  B4 4C			     mov ah,4ch
+     70	003B  CD 21			     int 21h
+     71
+     72	003D			     code ends
+     73					     end start
+Turbo Assembler	 Version 3.1	    01/01/02 06:32:19	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "01/01/02"
+??FILENAME			  Text	 "sam_rev "
+??TIME				  Text	 "06:32:19"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 SAM_REV
+@WORDSIZE			  Text	 2
+LP1				  Near	 CODE:002A
+LP2				  Near	 CODE:0027
+NEWLINE				  Byte	 DATA:003C
+S1				  Byte	 DATA:002A
+START				  Near	 CODE:0000
+STR1				  Byte	 DATA:0000
+STR2				  Byte	 DATA:0016
+
+Macro Name
+
+PRINT
+READ
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  003D Para	  none
+DATA				  16  003F Para	  none
+

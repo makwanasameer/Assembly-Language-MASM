@@ -1,0 +1,71 @@
+09bce026
+Turbo Assembler	 Version 3.1	    08/10/11 15:56:05	    Page 1
+array.asm
+
+
+
+      1
+      2
+      3
+      4	0000			     data segment
+      5	0000  19 15 30		     ar	db 19h,15h,30h
+      6	0003  ??		     max db ?
+      7	0004  ??		     min db  ?
+      8	0005			     data ends
+      9
+     10
+     11	0000			     code segment
+     12	0000			     start:
+     13					       assume cs:code,ds:data
+     14	0000  B8 0000s			       mov ax,data
+     15	0003  8E D8			       mov ds,ax
+     16	0005  B9 0002			       mov cx,02h
+     17	0008  BE 0000r			       lea si,ar
+     18	000B  8A 04			       mov al,[si]
+     19	000D  8A D8			       mov bl,al
+     20	000F  8A F8			       mov bh,al
+     21
+     22	0011  46		     lp1:    inc si
+     23	0012  3A 1C			      cmp bl,[si]
+     24	0014  72 02			      jc lp2
+     25	0016  8A 1C			      mov bl,[si]
+     26	0018  3A 3C		     lp2:   cmp	bh,[si]
+     27	001A  73 02			      jnc lp3
+     28	001C  8A 3C			      mov bh,[si]
+     29	001E  E2 F1		     lp3:   loop lp1
+     30	0020  88 3E 0003r		      mov max,bh
+     31	0024  88 1E 0004r		      mov min,bl
+     32	0028  B4 4C			      mov ah,4ch
+     33	002A  CD 21			      int 21h
+     34
+     35	002C			     code ends
+     36				     end start
+Turbo Assembler	 Version 3.1	    08/10/11 15:56:05	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "08/10/11"
+??FILENAME			  Text	 "array	  "
+??TIME				  Text	 "15:56:05"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 ARRAY
+@WORDSIZE			  Text	 2
+AR				  Byte	 DATA:0000
+LP1				  Near	 CODE:0011
+LP2				  Near	 CODE:0018
+LP3				  Near	 CODE:001E
+MAX				  Byte	 DATA:0003
+MIN				  Byte	 DATA:0004
+START				  Near	 CODE:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  002C Para	  none
+DATA				  16  0005 Para	  none
+

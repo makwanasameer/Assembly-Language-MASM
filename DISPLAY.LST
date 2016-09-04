@@ -1,0 +1,80 @@
+roll no :09bce026
+practical : to display hello world on the screen
+Turbo Assembler	 Version 3.1	    07/20/11 15:01:21	    Page 1
+display.asm
+
+
+
+      1	0000			     data segment
+      2	0000  20 20 20 20 20 20	20+  var1 db "				hello world$"
+      3	      20 20 20 20 20 20	20+
+      4	      20 20 20 20 20 20	20+
+      5	      20 20 20 20 20 68	65+
+      6	      6C 6C 6F 20 77 6F	72+
+      7	      6C 64 24
+      8	0026  0D 0A 24		     nl	db 0dh,0ah,'$'
+      9	0029			     data ends
+     10
+     11	0000			     code segment
+     12	0000			     start:
+     13				     Assume cs:code,ds:data
+     14	0000  B8 0000s		     mov ax,data
+     15	0003  8E D8		     mov ds,ax
+     16
+     17	0005  B9 0012		     mov cx,12h
+     18	0008			     l1:
+     19	0008  B4 09		     mov ah,09h
+     20	000A  BA 0026r		     mov dx,offset nl
+     21	000D  CD 21		     int 21h
+     22	000F  E2 F7		     loop l1
+     23
+     24	0011  B4 09		     mov ah,09h
+     25	0013  BA 0000r		     mov dx,offset var1
+     26	0016  CD 21		     int 21h
+     27
+     28	0018  B9 0012		     mov cx,12h
+     29	001B			     l1:
+**Error** display.asm(24) Symbol already defined elsewhere: L1
+     30	001B  B4 09		     mov ah,09h
+     31	001D  BA 0026r		     mov dx,offset nl
+     32	0020  CD 21		     int 21h
+     33	0022  E2 E4		     loop l1
+     34
+     35
+     36	0024  B4 4C		     mov ah,4ch
+     37	0026  CD 21		     int 21h
+     38
+     39	0028			     code ends
+     40				     end start
+Turbo Assembler	 Version 3.1	    07/20/11 15:01:21	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "07/20/11"
+??FILENAME			  Text	 "display "
+??TIME				  Text	 "15:01:21"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 DISPLAY
+@WORDSIZE			  Text	 2
+L1				  Near	 CODE:0008
+NL				  Byte	 DATA:0026
+START				  Near	 CODE:0000
+VAR1				  Byte	 DATA:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0028 Para	  none
+DATA				  16  0029 Para	  none
+Turbo Assembler	 Version 3.1	    07/20/11 15:01:21	    Page 3
+Error Summary
+
+
+
+**Error** display.asm(24) Symbol already defined elsewhere: L1
+

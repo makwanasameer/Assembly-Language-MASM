@@ -1,0 +1,194 @@
+09bce026
+Turbo Assembler	 Version 3.1	    08/24/11 15:44:52	    Page 1
+conv.asm
+
+
+
+      1	0000			     procedures	segment
+      2					     assume cs:procedures,ds:data
+      3	0000			     convert proc far
+      4
+      5	0000  A0 0027r			     mov al,num
+      6	0003  B4 00			     mov ah,00h
+      7	0005  B3 08			     mov bl,08h
+      8	0007  B9 0002			     mov cx,0002h
+      9
+     10	000A  F6 F3			lp1: div bl
+     11	000C  80 C4 30			     add ah,'0'
+     12	000F  88 24			     mov [si],ah
+     13	0011  B4 00			     mov ah,00h
+     14	0013  46			     inc si
+     15
+     16	0014  3C 00			     cmp al,00h
+     17	0016  75 F2			     jnz lp1
+     18	0018  4E			     dec si
+     19
+     20					     printline newline
+1    21	0019  B4 09			     mov ah,09h
+1    22	001B  BA 0000r			     mov dx,offset newline
+1    23	001E  CD 21			     int 21h
+     24					   ;  printline	msg2
+     25
+     26	0020  8A 14			 lp2:mov dl,[si]
+**Error** conv.asm(23) Symbol already defined elsewhere: LP2
+     27
+     28	0022  B4 02			     mov ah,02h
+     29	0024  CD 21			     int 21h
+     30
+     31	0026  4E			     dec si
+     32	0027  49			     dec cx
+     33	0028  75 EF			     jnz lp2
+     34	002A  CB			     ret
+     35
+     36	002B			     convert endp
+     37	002B			     procedures	ends
+     38
+     39
+     40
+     41				     read macro	lll
+     42					     mov ah,01h
+     43					     int 21h
+     44					     mov lll,al
+     45					     endm
+     46
+     47				     print macro kkk
+     48					     mov ah,02h
+     49					     mov dl,kkk
+     50					     int 21h
+     51					     endm
+     52
+     53				     printline macro fig
+*Warning* conv.asm(50) Pass-dependent construction encountered:	PRINTLINE
+     54					     mov ah,09h
+     55					     mov dx,offset fig
+Turbo Assembler	 Version 3.1	    08/24/11 15:44:52	    Page 2
+conv.asm
+
+
+
+     56					     int 21h
+     57				     endm
+     58
+     59				     readnum macro num1
+     60					     mov ah,01h
+     61					     int 21h
+     62					     sub al,'0'
+     63					     mov bh,0ah
+     64					     mul bh
+     65					     mov num1,al
+     66					     mov ah,01h
+     67					     int 21h
+     68					     sub al,'0'
+     69					     add num1,al
+     70
+     71					     endm
+     72
+     73
+     74
+     75
+     76
+     77	0000			     data segment
+     78	0000  0D 0A 24			     newline db	0dh,0ah,'$'
+     79	0003  45 6E 74 65 72 20	74+	     msg1 db "Enter the	no ,please:: $"
+     80	      68 65 20 6E 6F 20	2C+
+     81	      70 6C 65 61 73 65	3A+
+     82	      3A 20 24
+     83	001B  54 68 65 20 6E 6F	20+	     msg2 db "The no is::$"
+     84	      69 73 3A 3A 24
+     85	0027  ??			     num db ?
+     86	0028  05*(24)			     array db 5	dup('$');
+     87	002D  05*(24)			     fig db 5 dup('$')
+     88	0032			     data ends
+     89
+     90
+     91	0000			     code segment
+     92				     assume cs:code,ds:data,es:procedures
+     93	0000			     start:
+     94	0000  B8 0000s			     mov ax,data
+     95	0003  8E D8			     mov ds,ax
+     96	0005  BE 0028r			     mov si,offset array
+     97						     printline newline
+1    98	0008  B4 09			     mov ah,09h
+1    99	000A  BA 0000r			     mov dx,offset newline
+1   100	000D  CD 21			     int 21h
+    101						     printline msg1
+1   102	000F  B4 09			     mov ah,09h
+1   103	0011  BA 0003r			     mov dx,offset msg1
+1   104	0014  CD 21			     int 21h
+    105						     readnum num
+1   106	0016  B4 01			     mov ah,01h
+1   107	0018  CD 21			     int 21h
+1   108	001A  2C 30			     sub al,'0'
+1   109	001C  B7 0A			     mov bh,0ah
+1   110	001E  F6 E7			     mul bh
+1   111	0020  A2 0027r			     mov num,al
+1   112	0023  B4 01			     mov ah,01h
+Turbo Assembler	 Version 3.1	    08/24/11 15:44:52	    Page 3
+conv.asm
+
+
+
+1   113	0025  CD 21			     int 21h
+1   114	0027  2C 30			     sub al,'0'
+1   115	0029  00 06 0027r		     add num,al
+    116					     printline newline
+1   117	002D  B4 09			     mov ah,09h
+1   118	002F  BA 0000r			     mov dx,offset newline
+1   119	0032  CD 21			     int 21h
+    120
+    121
+    122	0034  9A 00000000sr		     call convert
+    123
+    124
+    125	0039  B4 4C			     mov ah,4ch
+    126	003B  CD 21			     int 21h
+    127
+    128	003D			     code ends
+    129					     end start
+Turbo Assembler	 Version 3.1	    08/24/11 15:44:52	    Page 4
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "08/24/11"
+??FILENAME			  Text	 "conv	  "
+??TIME				  Text	 "15:44:52"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 CONV
+@WORDSIZE			  Text	 2
+ARRAY				  Byte	 DATA:0028
+CONVERT				  Far	 PROCEDURES:0000
+FIG				  Byte	 DATA:002D
+LP1				  Near	 PROCEDURES:000A
+LP2				  Near	 PROCEDURES:0019
+MSG1				  Byte	 DATA:0003
+MSG2				  Byte	 DATA:001B
+NEWLINE				  Byte	 DATA:0000
+NUM				  Byte	 DATA:0027
+START				  Near	 CODE:0000
+
+Macro Name
+
+PRINT
+PRINTLINE
+READ
+READNUM
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  003D Para	  none
+DATA				  16  0032 Para	  none
+PROCEDURES			  16  002B Para	  none
+Turbo Assembler	 Version 3.1	    08/24/11 15:44:52	    Page 5
+Error Summary
+
+
+
+**Error** conv.asm(23) Symbol already defined elsewhere: LP2
+*Warning* conv.asm(50) Pass-dependent construction encountered:	PRINTLINE
+

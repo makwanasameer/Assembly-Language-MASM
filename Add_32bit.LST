@@ -1,0 +1,59 @@
+roll no:09bce026
+practical :addition of 32-bit data
+Turbo Assembler	 Version 3.1	    07/20/11 14:54:37	    Page 1
+sam32.asm
+
+
+
+      1	0000			     data segment
+      2	0000  1111			     var1 dw 1111h
+      3	0002  2222			     var2 dw 2222h
+      4	0004  3333			     var3 dw 3333h
+      5	0006  4444			     var4 dw 4444h
+      6
+      7	0008			     data ends
+      8	0000			     code segment
+      9				     assume cs:code,ds:data
+     10	0000			     start:
+     11	0000  B8 0000s			     mov ax,data
+     12	0003  8E D8			     mov ds,ax
+     13	0005  A1 0002r			     mov ax,var2
+     14	0008  8B 1E 0006r		     mov bx,var4
+     15	000C  03 C3			     add ax,bx
+     16	000E  8B D0			     mov dx,ax
+     17	0010  A1 0000r			     mov ax,var1
+     18	0013  8B 1E 0004r		     mov bx,var3
+     19	0017  13 C3			     adc ax,bx
+     20	0019  8B D8			     mov bx,ax;	 result	is in bx and dx
+     21	001B  B4 4C			     mov ah,4ch
+     22	001D  CD 21			     int 21h
+     23
+     24	001F			     code ends
+     25					     end start
+Turbo Assembler	 Version 3.1	    07/20/11 14:54:37	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "07/20/11"
+??FILENAME			  Text	 "sam32	  "
+??TIME				  Text	 "14:54:37"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 SAM32
+@WORDSIZE			  Text	 2
+START				  Near	 CODE:0000
+VAR1				  Word	 DATA:0000
+VAR2				  Word	 DATA:0002
+VAR3				  Word	 DATA:0004
+VAR4				  Word	 DATA:0006
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  001F Para	  none
+DATA				  16  0008 Para	  none
+
